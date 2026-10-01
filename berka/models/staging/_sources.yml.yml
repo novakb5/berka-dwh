@@ -1,0 +1,15 @@
+version: 2
+
+sources:
+  - name: berka_raw
+    meta:
+      external_location: "read_csv('C:/Users/novak.babic/berka-dwh/data/raw/{name}.csv', delim=';', header=true)"
+    tables:
+      - name: account
+      - name: card
+      - name: client
+      - name: disp
+      - name: district
+      - name: loan
+      - name: order
+      - name: trans
