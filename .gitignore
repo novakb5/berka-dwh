@@ -1,0 +1,8 @@
+.venv/
+data/
+logs/
+*.duckdb
+*.duckdb.wal
+berka/target/
+berka/logs/
+berka/dbt_packages/

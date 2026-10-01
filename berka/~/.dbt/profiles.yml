@@ -1,0 +1,7 @@
+berka:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: C:/Users/novak.babic/berka-dwh/berka.duckdb
+      threads: 4
