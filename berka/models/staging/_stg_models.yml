@@ -1,0 +1,173 @@
+version: 2
+
+models:
+  - name: stg_account
+    columns:
+      - name: account_id
+        data_tests:
+          - unique
+          - not_null
+      - name: district_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_district')
+                field: district_id
+      - name: statement_frequency
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['monthly', 'weekly', 'after_transaction']
+      - name: opened_date
+        data_tests:
+          - not_null
+
+  - name: stg_client
+    columns:
+      - name: client_id
+        data_tests:
+          - unique
+          - not_null
+      - name: district_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_district')
+                field: district_id
+      - name: gender
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['F', 'M']
+      - name: birth_date
+        data_tests:
+          - not_null
+
+  - name: stg_disp
+    columns:
+      - name: disp_id
+        data_tests:
+          - unique
+          - not_null
+      - name: client_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_client')
+                field: client_id
+      - name: account_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_account')
+                field: account_id
+      - name: account_role
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['owner', 'disponent']
+
+  - name: stg_card
+    columns:
+      - name: card_id
+        data_tests:
+          - unique
+          - not_null
+      - name: disp_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_disp')
+                field: disp_id
+      - name: card_type
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['junior', 'classic', 'gold']
+      - name: issued_date
+        data_tests:
+          - not_null
+
+  - name: stg_loan
+    columns:
+      - name: loan_id
+        data_tests:
+          - unique
+          - not_null
+      - name: account_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_account')
+                field: account_id
+      - name: loan_status
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['finished_ok', 'finished_unpaid', 'running_ok', 'running_late']
+      - name: loan_lifecycle
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['finished', 'running']
+      - name: is_problematic
+        data_tests:
+          - not_null
+
+  - name: stg_order
+    columns:
+      - name: order_id
+        data_tests:
+          - unique
+          - not_null
+      - name: account_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_account')
+                field: account_id
+      - name: payment_purpose
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['insurance', 'household', 'leasing', 'loan_payment']
+
+  - name: stg_district
+    columns:
+      - name: district_id
+        data_tests:
+          - unique
+          - not_null
+
+  - name: stg_trans
+    columns:
+      - name: trans_id
+        data_tests:
+          - unique
+          - not_null
+      - name: account_id
+        data_tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('stg_account')
+                field: account_id
+      - name: direction
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['credit', 'debit']
