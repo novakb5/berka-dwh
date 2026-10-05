@@ -12,4 +12,6 @@ sources:
       - name: district
       - name: loan
       - name: order
+        meta:
+          external_location: "read_csv('C:/Users/novak.babic/berka-dwh/data/raw/order.csv', delim=';', header=true, all_varchar=true)"
       - name: trans
